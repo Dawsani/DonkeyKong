@@ -1,0 +1,103 @@
+
+<!-- saved from url=(0050)https://thenumb.at/cpp-course/sdl2/01/vsSetup.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body><doctype html="">
+
+	
+<script type="text/javascript" async="" src="./SDL Setup For Visual Studio_files/js"></script><script async="" src="./SDL Setup For Visual Studio_files/analytics.js.download"></script><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83606680-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+		
+		<link rel="stylesheet" href="./SDL Setup For Visual Studio_files/styles.css">
+		<link rel="stylesheet" href="./SDL Setup For Visual Studio_files/styles(1).css">
+		<title>SDL Setup For Visual Studio</title>
+	
+	
+	<div id="main">
+		<header role="banner">
+			<h1>SDL Setup For Visual Studio</h1>
+			<a id="home" href="https://thenumb.at/cpp-course/sdl2/01/01.html">Back</a>
+			<nav role="navigation">
+				<ul class="subsections">
+					<li><a href="https://thenumb.at/cpp-course/sdl2/01/vsSetup.html#install">SDL Files</a></li>  
+					<li><a href="https://thenumb.at/cpp-course/sdl2/01/vsSetup.html#project">Project Settings</a></li>
+				</ul>
+			</nav>
+		</header>
+		<main role="main" class="nocollapse">
+		<article role="article">
+			<h2 id="install">SDL Files</h2>
+			<p>
+				First, <a href="https://thenumb.at/cpp-course/setup/02/02.html">set up an empty project</a>.
+			</p>
+			<p>
+				Then, <a href="https://www.libsdl.org/download-2.0.php">download SDL</a>. For Visual Studio, download the "VC" development library.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/00.png">
+			<p>
+				Extract the files and move the folder into your project.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/01.png">
+			<h2 id="project">Project Settings</h2>
+			<p>
+				Open up your project and press ALT + F7 to open the properties window.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/02.png">
+			<p>
+				Go to VC++ directories, select include directories, and select edit.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/03.png">
+			<p>
+				Add the path to the "include" folder in your SDL source folder. $(ProjectDir) is replaced with the path to your .vxproj file. Your path will likely differ from this example.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/04.png">
+			<p>
+				Hit OK, then do the same for library directories. Here, add lib/x86 from your SDL source folder.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/05.png">
+			<p>
+				Next, expand the linker options and select input. Click on additional dependencies and select edit.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/06.png">
+			<p>
+				Add SDL2.lib and SDL2main.lib.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/07.png">
+			<p>
+				Next, go to debugging and edit environment.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/08.png">
+			<p>
+				Add this command. Use the path to the lib/x86 folder in your SDL source folder. This allows your program to see the SDL libraries at runtime. To run the executable on its own, you must copy those libraries into the same directory.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/09.png">
+			<p>
+				Finally, go to system under linker. Edit subsystem.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/10.png">
+			<p>
+				Select console.
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/11.png">
+			<p>
+				You should now be done. To test, add a .cpp file with the example code for <a href="https://thenumb.at/cpp-course/sdl2/01/01.html">lesson 01</a>. 
+			</p>
+			<img src="./SDL Setup For Visual Studio_files/12.png">
+			<p>
+				Try building and running the project.
+			</p>
+		</article>
+		</main>
+		<footer role="contentinfo">
+			<p>Made by Maxwell Slater © 2015-2017 | Contact me at <a href="mailto:mslater@nevada.unr.edu">mslater@nevada.unr.edu</a> | <a href="https://github.com/TheNumbat/cpp-course">View this project on GitHub</a></p>
+		</footer>
+	</div>
+	
+
+</doctype></body></html>

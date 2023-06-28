@@ -1,0 +1,18 @@
+img {
+	margin: auto;
+	max-width: 750px;
+	max-height: 500px;
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+div.nocollapse > ul.collumns {
+	display: inline-block;
+	margin-right: 25px;
+}
+ul {
+	font-size: 1.1em;
+}
+.nocollapse:after {
+	display: inline-block;
+}
