@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Game.h"
+#include <iostream> // DEBUG ONLY!
 
 Player::Player(Game* pGame) : Actor(pGame)
 {
@@ -18,8 +19,8 @@ Player::Player(Game* pGame) : Actor(pGame)
 	_pSpriteComponent = new SpriteComponent(this);
 	_pSpriteComponent->SetTexture(pGame->GetTexture("Assets/Jumpman_Idle.png"));
 
+	// Set position to on ground
 	SetPosition(Vector2(16, GetGame()->GetWindowSize().y - _pRectangleColliderComponent->GetSize().y - 8));
-
 }
 
 void Player::Update(float deltaTime)
@@ -37,10 +38,12 @@ void Player::Update(float deltaTime)
 	}
 
 	// Apply gravity
-	_velocity = Vector2(_velocity.x, _velocity.y + _accelerationRate * deltaTime);
-	SetPosition(Vector2(GetPosition().x + _velocity.x * deltaTime, GetPosition().y + _velocity.y * deltaTime));
+	Vector2 velocity = _pInputComponent->GetVelocity();
+	_pInputComponent->SetVelocity(Vector2(velocity.x, velocity.y + _accelerationRate * deltaTime));
+	//SetPosition(Vector2(GetPosition().x + _velocity.x * deltaTime, GetPosition().y + _velocity.y * deltaTime));
 
 	// Check for collisions
+	_pInputComponent->SetIsGrounded(false);
 	for (Actor* actor : GetGame()->GetActors()) {
 		if (actor == this) {
 			continue;
@@ -54,7 +57,8 @@ void Player::Update(float deltaTime)
 
 		if (_pRectangleColliderComponent->Intersect(*collider)) {
 			// Appear on top of the box
-			_velocity = Vector2(0.0, 0.0);
+			_pInputComponent->SetIsGrounded(true);
+			_pInputComponent->SetVelocity(Vector2(0.0, 0.0));
 			SetPosition(Vector2(GetPosition().x, collider->GetActor()->GetPosition().y - _pRectangleColliderComponent->GetSize().y));
 		}
 	}

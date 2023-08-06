@@ -9,6 +9,8 @@
 #include "InputComponent.h"
 #include "SpriteComponent.h"
 #include "Actor.h"
+#include "Game.h"
+#include <iostream>
 
 InputComponent::InputComponent(class Actor* owner) : MoveComponent(owner)
 {
@@ -20,19 +22,27 @@ InputComponent::InputComponent(class Actor* owner) : MoveComponent(owner)
 void InputComponent::ProcessInput(const uint8_t* keyState) {
 	// Calculate forward/backward speed for MoveComponent
     // based on forward/backward custom keys.
-	Vector2 velocity = Vector2(0.0f, 0.0f);
+
+	// Can't control if not on ground
+	if (!_isGrounded) {
+		return;
+	}
+
+	Vector2 velocity = GetVelocity();
 	if (keyState[_rightKey]) {
-		velocity.x += _maxSpeed;
+		velocity.x = _maxSpeed;
 		// EVIL CODE
 		_pActor->GetComponent<SpriteComponent>()->SetIsFlipped(SDL_FLIP_HORIZONTAL);
-	}
-	if (keyState[_leftKey]) {
-		velocity.x -= _maxSpeed;
-		_pActor->GetComponent<SpriteComponent>()->SetIsFlipped(SDL_FLIP_NONE);
 
 	}
+	if (keyState[_leftKey]) {
+		velocity.x = -_maxSpeed;
+		_pActor->GetComponent<SpriteComponent>()->SetIsFlipped(SDL_FLIP_NONE);
+	}
 	if (keyState[_jumpKey]) {
-		velocity.y = -40;
+		velocity.y = -JUMP_SPEED;
+		_pActor->GetComponent<SpriteComponent>()->SetTexture(_pActor->GetGame()->GetTexture("Assets/Jumpman_Jumping_0.png"));
+		std::cout << "JUMP SPEED (InputComp): " << velocity.y << std::endl;
 	}
 	SetVelocity(velocity);
 }

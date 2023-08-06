@@ -27,6 +27,7 @@ public:
 	void SetRightKey(int key) { _rightKey = key; }
 	void SetLeftKey(int key) { _leftKey = key; }
 	void SetJumpKey(int key) { _jumpKey = key; }
+	void SetIsGrounded(bool isGrounded) { _isGrounded = isGrounded; }
 
 private:
 	// The maximum forward/angular speeds
@@ -38,4 +39,8 @@ private:
 
 	// Key for jumping
 	int _jumpKey;
+
+	bool _isGrounded;
+
+	const float JUMP_SPEED = 90;
 };

@@ -24,8 +24,7 @@ private:
 	SpriteComponent* _pSpriteComponent;
 	float _moveSpeed = 50;
 	bool _isJumping;
-	float _accelerationRate = 70; // Pixels per second per second
-	Vector2 _velocity; // Pixels per second
+	float _accelerationRate = 200; // Pixels per second per second
 	Status _playerStatus;
 	bool _facingRight;
 };
