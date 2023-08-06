@@ -5,7 +5,6 @@
 Player::Player(Game* pGame) : Actor(pGame)
 {
 	_facingRight = true;
-	_playerStatus = IDLE;
 
 	_pInputComponent = new InputComponent(this);
 	_pInputComponent->SetMaxSpeed(_moveSpeed);
@@ -27,13 +26,15 @@ void Player::Update(float deltaTime)
 {
 	Actor::Update(deltaTime);
 
-	if (_playerStatus == IDLE) {
+	InputComponent::Status status = _pInputComponent->GetStatus();
+
+	if (status == InputComponent::IDLE) {
 		_pSpriteComponent->SetTexture(GetGame()->GetTexture("Assets/Jumpman_Idle.png"));
 	}
-	else if (_playerStatus == RUNNING) {
+	else if (status == InputComponent::RUNNING) {
 		_pSpriteComponent->SetTexture(GetGame()->GetTexture("Assets/Jumpman_Running_0.png"));
 	}
-	else if (_playerStatus == JUMPING) {
+	else if (status == InputComponent::JUMPING) {
 		_pSpriteComponent->SetTexture(GetGame()->GetTexture("Assets/Jumpman_Jumping_0.png"));
 	}
 

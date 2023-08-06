@@ -11,13 +11,6 @@ public:
 
 	virtual void Update(float deltaTime) override;
 
-	enum Status {
-		IDLE,
-		RUNNING,
-		JUMPING,
-		CLIMBING
-	};
-
 private:
 	RectangleColliderComponent* _pRectangleColliderComponent;
 	InputComponent* _pInputComponent;
@@ -25,7 +18,6 @@ private:
 	float _moveSpeed = 50;
 	bool _isJumping;
 	float _accelerationRate = 200; // Pixels per second per second
-	Status _playerStatus;
 	bool _facingRight;
 };
 

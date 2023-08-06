@@ -12,6 +12,13 @@
 
 class InputComponent : public MoveComponent {
 public:
+	enum Status {
+		IDLE,
+		RUNNING,
+		JUMPING,
+		CLIMBING
+	};
+
 	// Lower update order to update first
 	InputComponent(class Actor* owner);
 
@@ -22,6 +29,7 @@ public:
 	int GetRightKey() const { return _rightKey; }
 	int GetLeftKey() const { return _leftKey; }
 	int GetJumpKey() const { return _jumpKey; }
+	Status GetStatus() const { return _status; }
 
 	void SetMaxSpeed(float speed) { _maxSpeed = speed; }
 	void SetRightKey(int key) { _rightKey = key; }
@@ -43,4 +51,7 @@ private:
 	bool _isGrounded;
 
 	const float JUMP_SPEED = 90;
+
+	Status _status;
+
 };
