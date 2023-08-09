@@ -10,7 +10,6 @@
 #include <vector>
 #include "Math.h"
 #include "SDL_image.h"
-#include <typeinfo>
 
 class Actor {
 public:

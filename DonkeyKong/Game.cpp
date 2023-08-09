@@ -11,6 +11,8 @@
 #include "Background.h"
 #include "WalkingBlock.h"
 #include "Player.h"
+#include "Barrel.h"
+#include "Ladder.h"
 #include <time.h>
 #include <iostream>
 #include <cstdlib>
@@ -184,6 +186,22 @@ void Game::_loadData() {
     for (int i = 0; i < 8; i++) {
         WalkingBlock* walkingBlock = new WalkingBlock(this);
         walkingBlock->SetPosition(Vector2((i+6) * walkingBlock->GetSize().x, GetWindowSize().y - walkingBlock->GetSize().y - i));
+    }
+
+    // Second incline
+    for (int i = 0; i < 13; i++) {
+        WalkingBlock* walkingBlock = new WalkingBlock(this);
+        walkingBlock->SetPosition(Vector2(i*walkingBlock->GetSize().x, GetWindowSize().y - 42 - walkingBlock->GetSize().y + i));
+    }
+
+    // Test Barrel
+    Barrel* barrel = new Barrel(this);
+    barrel->SetPosition(Vector2(208, GetWindowSize().y - 8 - 7 - 10));
+
+    // Ladder
+    for (int i = 0; i < 5; i++) {
+        Ladder* ladder = new Ladder(this);
+        ladder->SetPosition(Vector2(64, 64 + i * 4));
     }
 }
 

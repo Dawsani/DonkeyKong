@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Game.h"
+#include "WalkingBlock.h"
 #include <iostream> // DEBUG ONLY!
 
 Player::Player(Game* pGame) : Actor(pGame)
@@ -57,10 +58,15 @@ void Player::Update(float deltaTime)
 		}
 
 		if (_pRectangleColliderComponent->Intersect(*collider)) {
-			// Appear on top of the box
-			_pInputComponent->SetIsGrounded(true);
-			_pInputComponent->SetVelocity(Vector2(0.0, 0.0));
-			SetPosition(Vector2(GetPosition().x, collider->GetActor()->GetPosition().y - _pRectangleColliderComponent->GetSize().y));
+			// If the collision is a walking block
+			if (dynamic_cast<WalkingBlock*>(actor) != nullptr) {
+				// Appear on top of the box
+				_pInputComponent->SetIsGrounded(true);
+				_pInputComponent->SetVelocity(Vector2(0.0, 0.0));
+				SetPosition(Vector2(GetPosition().x, collider->GetActor()->GetPosition().y - _pRectangleColliderComponent->GetSize().y));
+			}
+			// If it's like a ladder or whatever, whole 'nother story
+
 		}
 	}
 

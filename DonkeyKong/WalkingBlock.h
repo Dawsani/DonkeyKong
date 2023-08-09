@@ -4,7 +4,7 @@
 #include "SpriteComponent.h"
 #include "RectangleColliderComponent.h"
 
-class WalkingBlock : Actor
+class WalkingBlock : public Actor
 {
 public:
 	WalkingBlock(Game* pGame);
