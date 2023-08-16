@@ -14,8 +14,10 @@ private:
 	SpriteComponent* _pSpriteComponent;
 	MoveComponent* _pMoveComponent;
 	RectangleColliderComponent* _pRectangleColliderComponent;
-	float _forwardSpeed = -30;
-	float _downwardSpeed = 10;
-
+	bool _isFalling;
+	bool _wasFalling;
+	float _direction = 1;
+	const float SPEED = 50;
+	const float DOWNWARD_SPEED = 100;
 };
 

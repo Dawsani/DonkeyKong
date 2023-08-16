@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "Barrel.h"
 #include "Ladder.h"
+#include "DonkeyKong.h"
 #include <time.h>
 #include <iostream>
 #include <cstdlib>
@@ -191,18 +192,34 @@ void Game::_loadData() {
     // Second incline
     for (int i = 0; i < 13; i++) {
         WalkingBlock* walkingBlock = new WalkingBlock(this);
-        walkingBlock->SetPosition(Vector2(i*walkingBlock->GetSize().x, GetWindowSize().y - 42 - walkingBlock->GetSize().y + i));
+        walkingBlock->SetPosition(Vector2(i*walkingBlock->GetSize().x, GetWindowSize().y - 40 - walkingBlock->GetSize().y + i));
+    }
+
+    // Third incline
+    for (int i = 0; i < 14; i++) {
+        WalkingBlock* walkingBlock = new WalkingBlock(this);
+        walkingBlock->SetPosition(Vector2(GetWindowSize().x - walkingBlock->GetSize().x * i, GetWindowSize().y - 74 - walkingBlock->GetSize().y + i));
     }
 
     // Test Barrel
     Barrel* barrel = new Barrel(this);
-    barrel->SetPosition(Vector2(208, GetWindowSize().y - 8 - 7 - 10));
+    barrel->SetPosition(Vector2(100, 100));
 
     // Ladder
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 2; i++) {
         Ladder* ladder = new Ladder(this);
-        ladder->SetPosition(Vector2(64, 64 + i * 4));
+        ladder->SetPosition(Vector2(80, GetWindowSize().y - 12 - i * 4));
     }
+
+    // Second ladder
+    for (int i = 0; i < 4; i++) {
+        Ladder* ladder = new Ladder(this);
+        ladder->SetPosition(Vector2(GetWindowSize().x - 40, GetWindowSize().y - 17 - i * 4));
+    }
+
+    // DK
+    DonkeyKong* dk = new DonkeyKong(this);
+
 }
 
 // Cleanup of any actors and textures.

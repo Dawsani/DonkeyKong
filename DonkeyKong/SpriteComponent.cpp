@@ -8,8 +8,7 @@
 
 #include "SpriteComponent.h"
 
-SpriteComponent::SpriteComponent(Actor* pActor, int drawOrder)
-    :Component(pActor)
+SpriteComponent::SpriteComponent(Actor* pActor, int drawOrder) : Component(pActor)
     ,_pTexture(nullptr)
     ,_drawOrder(drawOrder)
     ,_texWidth(0)

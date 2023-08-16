@@ -24,27 +24,33 @@ void InputComponent::ProcessInput(const uint8_t* keyState) {
     // based on forward/backward custom keys.
 
 	// Can't control if not on ground
-	if (!_isGrounded) {
-		return;
+	if (_isGrounded) {
+		Vector2 velocity = GetVelocity();
+		_status = IDLE;
+		if (keyState[_rightKey]) {
+			velocity.x = _maxSpeed;
+			// EVIL CODE
+			_pActor->GetComponent<SpriteComponent>()->SetIsFlipped(SDL_FLIP_HORIZONTAL);
+			_status = RUNNING;
+		}
+		if (keyState[_leftKey]) {
+			velocity.x = -_maxSpeed;
+			_pActor->GetComponent<SpriteComponent>()->SetIsFlipped(SDL_FLIP_NONE);
+			_status = RUNNING;
+		}
+		if (keyState[_jumpKey]) {
+			velocity.y = -JUMP_SPEED;
+			_pActor->GetComponent<SpriteComponent>()->SetTexture(_pActor->GetGame()->GetTexture("Assets/Jumpman_Jumping_0.png"));
+			_status = JUMPING;
+		}
+		SetVelocity(velocity);
 	}
-
-	Vector2 velocity = GetVelocity();
-	_status = IDLE;
-	if (keyState[_rightKey]) {
-		velocity.x = _maxSpeed;
-		// EVIL CODE
-		_pActor->GetComponent<SpriteComponent>()->SetIsFlipped(SDL_FLIP_HORIZONTAL);
-		_status = RUNNING;
+	if (_isTouchingLadder) {
+		if (keyState[_upKey]) {
+			_status = CLIMBING;
+			SetVelocity(Vector2(GetVelocity().x, -CLIMB_SPEED));
+			_pActor->GetComponent<SpriteComponent>()->SetTexture(_pActor->GetGame()->GetTexture("Assets/Jumpman_Climbing.png"));
+		}
+		
 	}
-	if (keyState[_leftKey]) {
-		velocity.x = -_maxSpeed;
-		_pActor->GetComponent<SpriteComponent>()->SetIsFlipped(SDL_FLIP_NONE);
-		_status = RUNNING;
-	}
-	if (keyState[_jumpKey]) {
-		velocity.y = -JUMP_SPEED;
-		_pActor->GetComponent<SpriteComponent>()->SetTexture(_pActor->GetGame()->GetTexture("Assets/Jumpman_Jumping_0.png"));
-		_status = JUMPING;
-	}
-	SetVelocity(velocity);
 }

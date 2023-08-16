@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "Game.h"
 #include "WalkingBlock.h"
+#include "Ladder.h"
+#include "Barrel.h"
 #include <iostream> // DEBUG ONLY!
 
 Player::Player(Game* pGame) : Actor(pGame)
@@ -11,6 +13,8 @@ Player::Player(Game* pGame) : Actor(pGame)
 	_pInputComponent->SetMaxSpeed(_moveSpeed);
 	_pInputComponent->SetRightKey(SDL_SCANCODE_RIGHT);
 	_pInputComponent->SetLeftKey(SDL_SCANCODE_LEFT);
+	_pInputComponent->SetUpKey(SDL_SCANCODE_UP);
+	_pInputComponent->SetDownKey(SDL_SCANCODE_DOWN);
 	_pInputComponent->SetJumpKey(SDL_SCANCODE_SPACE);
 
 	_pRectangleColliderComponent = new RectangleColliderComponent(this);
@@ -25,6 +29,8 @@ Player::Player(Game* pGame) : Actor(pGame)
 
 void Player::Update(float deltaTime)
 {
+	lastPosition = GetPosition();
+
 	Actor::Update(deltaTime);
 
 	InputComponent::Status status = _pInputComponent->GetStatus();
@@ -39,13 +45,15 @@ void Player::Update(float deltaTime)
 		_pSpriteComponent->SetTexture(GetGame()->GetTexture("Assets/Jumpman_Jumping_0.png"));
 	}
 
-	// Apply gravity
-	Vector2 velocity = _pInputComponent->GetVelocity();
-	_pInputComponent->SetVelocity(Vector2(velocity.x, velocity.y + _accelerationRate * deltaTime));
-	//SetPosition(Vector2(GetPosition().x + _velocity.x * deltaTime, GetPosition().y + _velocity.y * deltaTime));
-
+	// Apply gravity ONLY IF not climbing
+	if (_pInputComponent->GetStatus() != InputComponent::CLIMBING) {
+		Vector2 velocity = _pInputComponent->GetVelocity();
+		_pInputComponent->SetVelocity(Vector2(velocity.x, velocity.y + _accelerationRate * deltaTime));
+	}
+	
 	// Check for collisions
 	_pInputComponent->SetIsGrounded(false);
+	_pInputComponent->SetIsTouchingLadder(false);
 	for (Actor* actor : GetGame()->GetActors()) {
 		if (actor == this) {
 			continue;
@@ -60,14 +68,33 @@ void Player::Update(float deltaTime)
 		if (_pRectangleColliderComponent->Intersect(*collider)) {
 			// If the collision is a walking block
 			if (dynamic_cast<WalkingBlock*>(actor) != nullptr) {
-				// Appear on top of the box
-				_pInputComponent->SetIsGrounded(true);
-				_pInputComponent->SetVelocity(Vector2(0.0, 0.0));
-				SetPosition(Vector2(GetPosition().x, collider->GetActor()->GetPosition().y - _pRectangleColliderComponent->GetSize().y));
+				// Appear on top of the box if you came in from above
+				if (GetPosition().y  + _pRectangleColliderComponent->GetSize().y * 0.75f < collider->GetActor()->GetPosition().y) {
+					_pInputComponent->SetIsGrounded(true);
+					_pInputComponent->SetVelocity(Vector2(0.0, 0.0));
+					SetPosition(Vector2(GetPosition().x, collider->GetActor()->GetPosition().y - _pRectangleColliderComponent->GetSize().y));
+				}
 			}
 			// If it's like a ladder or whatever, whole 'nother story
-
+			if (dynamic_cast<Ladder*>(actor) != nullptr) {
+				// Maybe just set a bool isTouchingLadder, and let 
+				_pInputComponent->SetIsTouchingLadder(true);
+			}
+			// If it's a barrel, die
+			if (dynamic_cast<Barrel*>(actor) != nullptr) {
+				// TODO: game over!
+				std::cout << "GAME OVER!" << std::endl;
+			}
 		}
 	}
 
+	// Make sure player isn't outside screen boundries
+	Vector2 pos = GetPosition();
+	if (pos.x < 0) {
+		pos.x = 0;
+	}
+	else if (pos.x + _pRectangleColliderComponent->GetSize().x > GetGame()->GetWindowSize().x) {
+		pos.x = GetGame()->GetWindowSize().x - _pRectangleColliderComponent->GetSize().x;
+	}
+	SetPosition(pos);
 }

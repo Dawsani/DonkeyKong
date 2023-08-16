@@ -11,10 +11,12 @@ public:
 
 	virtual void Update(float deltaTime) override;
 
+
 private:
 	RectangleColliderComponent* _pRectangleColliderComponent;
 	InputComponent* _pInputComponent;
 	SpriteComponent* _pSpriteComponent;
+	Vector2 lastPosition;
 	float _moveSpeed = 50;
 	bool _isJumping;
 	float _accelerationRate = 200; // Pixels per second per second
