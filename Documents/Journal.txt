@@ -1,0 +1,3 @@
+How to make barrels sometimes go down ladders?
+How will the barrel know it is above a ladder?
+Either an invisible triiger box linked to the ladder, or an invisable trigger below the barrel looking for ladders. The 'ladder' (see what i did there) sounds easier. Maybe. Actually no, that sounds evil.

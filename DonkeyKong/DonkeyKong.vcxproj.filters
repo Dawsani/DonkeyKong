@@ -72,6 +72,12 @@
     <ClCompile Include="DonkeyKong.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OilBarrel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BarrelLadderTrigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -126,6 +132,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DonkeyKong.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OilBarrel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BarrelLadderTrigger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

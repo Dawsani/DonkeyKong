@@ -6,6 +6,12 @@ RectangleColliderComponent::RectangleColliderComponent(Actor* pActor) : Componen
 	_size = Vector2(0.0f, 0.0f);
 }
 
+void RectangleColliderComponent::Update(float deltaTime)
+{
+	Component::Update(deltaTime);
+
+}
+
 bool RectangleColliderComponent::Intersect(const RectangleColliderComponent& other)
 {
 	Vector2 position = _pActor->GetPosition();
